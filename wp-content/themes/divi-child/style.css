@@ -1,0 +1,316 @@
+/*
+ Theme Name:   Divi Child
+ Theme URI:    http://example.com/twenty-fifteen-child/
+ Description:  Divi Child Theme
+ Author:       Laura Greenberg
+ Author URI:   http://laura-greenberg.com
+ Template:     Divi
+ Version:      1.0.0
+ License:      GNU General Public License v2 or later
+ License URI:  http://www.gnu.org/licenses/gpl-2.0.html
+ Tags:         light, dark, two-columns, right-sidebar, responsive-layout, accessibility-ready
+ Text Domain:  divi-child
+*/
+
+body,
+html{
+   height:100%;
+   min-height:100%;
+}
+
+h1,
+h4{
+  color:#986f08;
+}
+
+p{
+  color:#EFD9C1;
+  font-family:verdana, sans-serif;
+}
+
+h3,
+#vsel .vsel-content p
+{
+  color:#74A5DC!important;
+}
+
+h2,
+h4 {
+  text-align: center;
+  font-size:1.1em!important;
+}
+
+#vsel .vsel-content p{
+  line-height:1.5em;
+  padding-bottom:0;
+  font-size:.9em;
+}
+
+#main-header{
+  background:url(http://localhost:88/jjband/wp-content/uploads/2017/05/jjb_menu1.gif);
+  background-size:contain;
+}
+
+#myprefix-page-start-img{
+  width:100%;
+}
+
+.et_header_style_centered .mobile_nav .select_page{
+  font-size:1.5em!important;
+}
+
+.et_header_style_centered #et_mobile_nav_menu{
+  margin:0;
+}
+
+body.custom-background{
+  background-position:center top!important;
+}
+.et_header_style_centered #main-header{
+  padding:0;
+}
+
+.left-image-sidebar{
+  padding:0 5%;
+  margin:0!important;
+}
+
+.left-image-sidebar img {
+  width: 100%!important;
+}
+
+/*homepage*/
+h1.entry-title.main_title,
+#main-content .container:before{
+  display:none;
+}
+
+#page-container .container{
+  padding:0;
+  width:90%;
+  max-width:1200px;
+  display:flex;
+  justify-content:center;
+  overflow:hidden;
+}
+
+.et_right_sidebar #left-area{
+  padding:0;
+}
+
+.et_pb_row.et_pb_row_fullwidth {
+  width:100%!important;
+  min-width:100%!important;
+}
+
+
+/*upcoming events content*/
+
+#vsel p{
+  margin:0;
+}
+
+.et_right_sidebar #sidebar{
+  background:rgba(13,31,51,0.6);
+  padding-top:20%;
+  text-align:center;
+}
+
+#vsel .vsel-meta-title{
+  display:none;
+}
+
+#vsel .vsel-content{
+  border:0;
+}
+
+.vsel-meta a,
+.et_pb_widget a {
+  font-weight: bold;
+  color:#74a5dc;
+}
+
+/*BIO pages**/
+.et_pb_column{
+  margin-bottom:0!important;
+}
+
+.bio-image img{
+  width:100%!important;
+}
+
+/*FOOTER*/
+#footer-bottom{
+  display:none!important;
+}
+
+.bottom-nav a{
+  font-family:"amatic SC", sans-serif;
+  font-size:1.5em!important;
+  line-height:2em;
+}
+
+/*SHOWS PAGE*/
+.vsel-image-info{
+  display:none!important;
+}
+
+#post-61 #vsel .vsel-meta{
+  width:100%!important;
+}
+
+/* Setting the breakpoint of the mobile menu */
+@media only screen and ( min-width: 567px ) {
+#top-menu-nav, #top-menu {
+  display: block!important;
+}
+#et_top_search {
+  display: none!important;
+}
+#et_mobile_nav_menu {
+  display: none!important;
+}
+
+#top-menu li{
+  line-height:3em!important;
+}
+
+.et_header_style_centered #top-menu > li > a{
+  padding-bottom:0!important;
+}
+
+#myprefix-page-start-img {
+  width:90%;
+  max-width:1200px;
+  margin:0 auto;
+  display:flex;
+  justify-content:center;
+}
+
+.et_right_sidebar #sidebar{
+  padding-top:10%!important;
+}
+}
+
+@media only screen and (min-width:768px ) {
+#top-menu li{
+  padding-right:50px;
+}
+
+.page.et_pb_pagebuilder_layout #main-content{
+  overflow:hidden!important;
+}
+
+/*videos and pics page*/
+
+.videos-column{
+  margin:0 -5%;
+}
+}
+
+@media only screen and (min-width:768px ) and (max-width:980px){
+.left-image-sidebar {
+  width:30%!important;
+  float:left!important;
+}
+
+.home-content {
+  width: 70%!important;
+  padding-bottom:50%!important;
+  margin-bottom:-50%!important;
+}
+
+.et_right_sidebar #sidebar {
+  display:none!important;
+}
+
+#vsel .vsel-meta{
+  width:100%!important;
+}
+
+body.custom-background {
+    background-position: center bottom!important;
+}
+
+}
+
+/* Change header to float correctly wherever it is in the page */
+@media only screen and ( min-width:981px ) {
+#main-header {
+  position:relative !important;
+  top:0px !important;
+} /* inline */
+
+#main-header.et-fixed-header {
+  position:fixed !important;
+  margin-bottom:0px;
+  top:0px !important;
+  } /* floating */
+
+body.admin-bar #main-header.et-fixed-header {
+  top:32px !important;
+  } /* adjust for WP admin bar */
+
+#page-container {
+  overflow:hidden;
+  } /* prevent sub-menus from breaking scrolling */
+
+	/* Handle top header */
+#top-header {
+  position:relative !important;
+  top:0px !important; } /* inline header */
+
+#top-menu li{
+    line-height:2em!important;
+  }
+
+
+/* Override Divi JS padding adjustment */
+div#page-container[style] {
+  padding-top:0 !important; }
+
+/* Remove gap between heading and menu caused by line height
+body {
+  line-height:0 !important; }
+body * {
+  line-height:1.7em }
+*/
+
+/*main-content*/
+.main-content{
+  padding-bottom:10%!important;
+  margin-bottom:-10%!important;
+}
+
+
+/*left sidebar*/
+.left-image-sidebar{
+  margin-right:0!important;
+}
+
+/*right sidebar*/
+h4.widgettitle{
+  text-align:left;
+}
+
+.et_right_sidebar #sidebar{
+  height:100%!important;
+  padding:2% 0 0 0!important;
+  margin:0;
+  text-align:left;
+}
+
+}
+
+  /* Style the image for box layout */
+  @media only screen and (min-width: 1200px) {
+  	.et_boxed_layout #myprefix-page-start-img {
+  		max-width:1200px;
+  		-moz-box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
+  		-webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  		box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  		display:block !important;
+  		margin-left:auto;
+  		margin-right:auto;
+  	}
+  }
