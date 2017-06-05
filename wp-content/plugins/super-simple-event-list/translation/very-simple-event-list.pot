@@ -301,7 +301,7 @@ msgid "End date"
 msgstr ""
 
 #: vsel.php:158
-msgid "Example: 16.00 - 18.00"
+msgid "Example: Friday/ 6-8pm"
 msgstr ""
 
 #: vsel.php:160

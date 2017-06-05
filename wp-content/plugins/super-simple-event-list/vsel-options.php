@@ -13,7 +13,7 @@ function vsel_menu_page() {
 add_action( 'admin_menu', 'vsel_menu_page' );
 
 
-// add admin settings and such 
+// add admin settings and such
 function vsel_admin_init() {
 	add_settings_section( 'vsel-section', __( 'General', 'very-simple-event-list' ), 'vsel_section_callback', 'vsel' );
 
@@ -22,9 +22,6 @@ function vsel_admin_init() {
 
 	add_settings_field( 'vsel-field-1', __( 'Summary', 'very-simple-event-list' ), 'vsel_field_callback_1', 'vsel', 'vsel-section' );
 	register_setting( 'vsel-options', 'vsel-setting-1', 'sanitize_text_field' );
-
-	add_settings_field( 'vsel-field-9', __( 'Title', 'very-simple-event-list' ), 'vsel_field_callback_9', 'vsel', 'vsel-section' );
-	register_setting( 'vsel-options', 'vsel-setting-9', 'sanitize_text_field' );
 
 	add_settings_section( 'vsel-section-3', __( 'Page', 'very-simple-event-list' ), 'vsel_section_callback_3', 'vsel' );
 
@@ -87,14 +84,6 @@ function vsel_field_callback_1() {
 	<?php
 }
 
-function vsel_field_callback_9() {
-	$value = esc_attr( get_option( 'vsel-setting-9' ) );
-	?>
-	<input type='hidden' name='vsel-setting-9' value='no'>
-	<label><input type='checkbox' name='vsel-setting-9' <?php checked( $value, 'yes' ); ?> value='yes'> <?php _e( 'Link title to the event page.', 'very-simple-event-list' ); ?></label>
-	<?php
-}
-
 function vsel_field_callback_8() {
 	$value = esc_attr( get_option( 'vsel-setting-8' ) );
 	?>
@@ -111,7 +100,7 @@ function vsel_field_callback_10() {
 	<?php
 }
 
-function vsel_field_callback_2() { 
+function vsel_field_callback_2() {
 	$value = esc_attr( get_option( 'vsel-setting-2' ) );
 	?>
 	<input type='hidden' name='vsel-setting-2' value='no'>
@@ -119,7 +108,7 @@ function vsel_field_callback_2() {
 	<?php
 }
 
-function vsel_field_callback_3() { 
+function vsel_field_callback_3() {
 	$value = esc_attr( get_option( 'vsel-setting-3' ) );
 	?>
 	<input type='hidden' name='vsel-setting-3' value='no'>
@@ -127,7 +116,7 @@ function vsel_field_callback_3() {
 	<?php
 }
 
-function vsel_field_callback_4() { 
+function vsel_field_callback_4() {
 	$value = esc_attr( get_option( 'vsel-setting-4' ) );
 	?>
 	<input type='hidden' name='vsel-setting-4' value='no'>
@@ -135,7 +124,7 @@ function vsel_field_callback_4() {
 	<?php
 }
 
-function vsel_field_callback_5() { 
+function vsel_field_callback_5() {
 	$value = esc_attr( get_option( 'vsel-setting-5' ) );
 	?>
 	<input type='hidden' name='vsel-setting-5' value='no'>
@@ -143,7 +132,7 @@ function vsel_field_callback_5() {
 	<?php
 }
 
-function vsel_field_callback_7() { 
+function vsel_field_callback_7() {
 	$value = esc_attr( get_option( 'vsel-setting-7' ) );
 	?>
 	<input type='hidden' name='vsel-setting-7' value='no'>
@@ -151,7 +140,7 @@ function vsel_field_callback_7() {
 	<?php
 }
 
-function vsel_field_callback_6() { 
+function vsel_field_callback_6() {
 	$value = esc_attr( get_option( 'vsel-setting-6' ) );
 	?>
 	<input type='hidden' name='vsel-setting-6' value='no'>
@@ -163,9 +152,9 @@ function vsel_field_callback_6() {
 // display admin options page
 function vsel_options_page() {
 ?>
-<div class="wrap"> 
-	<div id="icon-plugins" class="icon32"></div> 
-	<h1><?php _e( 'Very Simple Event List', 'very-simple-event-list' ); ?></h1> 
+<div class="wrap">
+	<div id="icon-plugins" class="icon32"></div>
+	<h1><?php _e( 'Very Simple Event List', 'very-simple-event-list' ); ?></h1>
 	<form action="options.php" method="POST">
 	<?php settings_fields( 'vsel-options' ); ?>
 	<?php do_settings_sections( 'vsel' ); ?>

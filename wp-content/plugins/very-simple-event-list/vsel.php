@@ -2,7 +2,7 @@
 /*
  * Plugin Name: Very Simple Event List
  * Description: This is a very simple plugin to display a list of events. Use a shortcode to display events on a page or use the widget. For more info please check readme file.
- * Version: 6.2
+ * Version: 6.3
  * Author: Guido van der Leest
  * Author URI: http://www.guidovanderleest.nl
  * License: GNU General Public License v3 or later
@@ -78,7 +78,6 @@ function vsel_custom_postype() {
 		'name' => __( 'Events', 'very-simple-event-list' ), 
 		'all_items' => __( 'All Events', 'very-simple-event-list' ), 
 		'singular_name' => __( 'Event', 'very-simple-event-list' ), 
-		'add_new' => __( 'Add New', 'very-simple-event-list' ), 
 		'add_new_item' => __( 'Add New Event', 'very-simple-event-list' ), 
 		'edit_item' => __( 'Edit Event', 'very-simple-event-list' ), 
 		'new_item' => __( 'New Event', 'very-simple-event-list' ), 
@@ -88,7 +87,6 @@ function vsel_custom_postype() {
 		'not_found_in_trash' => __( 'No events found in Trash', 'very-simple-event-list' ), 
 	); 
 	$vsel_args = array( 
-		'label' => __( 'Events', 'very-simple-event-list' ), 
 		'labels' => $vsel_labels, 
 		'public' => true, 
 		'can_export' => true, 
@@ -96,7 +94,7 @@ function vsel_custom_postype() {
 		'show_ui' => true, 
 		'capability_type' => 'post', 
 		'taxonomies' => array('event_cat'),
- 		'supports'=> array('title', 'thumbnail', 'editor'), 
+ 		'supports' => array('title', 'thumbnail', 'editor'), 
 	); 
 	register_post_type( 'event', $vsel_args); 
 }
@@ -160,8 +158,8 @@ function vsel_metabox_callback( $post ) {
 	<input class="widefat" id="vsel-time" type="text" name="vsel-time" maxlength="100" placeholder="<?php _e( 'Example: 16.00 - 18.00', 'very-simple-event-list' ); ?>" value="<?php echo esc_attr( $event_time ); ?>" /></p>
 	<p><label for="vsel-location"><?php _e( 'Location', 'very-simple-event-list' ); ?></label> 
 	<input class="widefat" id="vsel-location" type="text" name="vsel-location" maxlength="100" placeholder="<?php _e( 'Example: Times Square', 'very-simple-event-list' ); ?>" value="<?php echo esc_attr( $event_location ); ?>" /></p>
-	<p><label for="vsel-link"><?php _e( 'Link', 'very-simple-event-list' ); ?></label> 
-	<input class="widefat" id="vsel-link" type="text" name="vsel-link" maxlength="150" placeholder="<?php _e( 'Example: wordpress.org', 'very-simple-event-list' ); ?>" value="<?php echo esc_url( $event_link ); ?>" /></p>
+	<p><label for="vsel-link"><?php _e( 'Link to more info', 'very-simple-event-list' ); ?></label> 
+	<input class="widefat" id="vsel-link" type="text" name="vsel-link" maxlength="150" placeholder="<?php _e( 'Example: www.wordpress.org', 'very-simple-event-list' ); ?>" value="<?php echo esc_url( $event_link ); ?>" /></p>
 	<p><label for="vsel-link-label"><?php _e( 'Link label', 'very-simple-event-list' ); ?></label> 
 	<input class="widefat" id="vsel-link-label" type="text" name="vsel-link-label" maxlength="100" placeholder="<?php _e( 'Example: More info', 'very-simple-event-list' ); ?>" value="<?php echo esc_attr( $event_link_label ); ?>" /></p>
 	<p><input class="checkbox" id="vsel-link-target" type="checkbox" name="vsel-link-target" value="yes" <?php checked( $event_link_target, 'yes' ); ?> /> 
@@ -186,17 +184,11 @@ function vsel_save_event_info( $post_id ) {
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 		return;
 	}
-	// check user permissions
-	if ( isset( $_POST['post_type'] ) && 'page' == $_POST['post_type'] ) {
-		if ( ! current_user_can( 'edit_page', $post_id ) ) {
-			return;
-		}
-	} else {
-		if ( ! current_user_can( 'edit_post', $post_id ) ) {
-			return;
-		}
+	// check user permission
+	if ( ( get_post_type() != 'event' ) || ! current_user_can( 'edit_post', $post_id ) ) {
+		return;
 	}
-	// checking values and save fields 
+ 	// checking values and save fields 
 	if ( isset( $_POST['vsel-start-date'] ) ) { 
 		update_post_meta( $post_id, 'event-start-date', sanitize_text_field(strtotime( $_POST['vsel-start-date'] ) ) ); 
 	} 

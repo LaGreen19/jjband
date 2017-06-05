@@ -71,6 +71,9 @@ function vsel_shortcode( $vsel_atts ) {
 			// get setting to hide date
 			$event_date_hide = esc_attr(get_option('vsel-setting-8'));
 
+			// get setting to hide link to more info
+			$event_link_hide = esc_attr(get_option('vsel-setting-10'));
+
 			// get settings to hide elements in widget
 			$widget_date = esc_attr(get_option('vsel-setting-2'));
 			$widget_time = esc_attr(get_option('vsel-setting-3'));
@@ -107,44 +110,44 @@ function vsel_shortcode( $vsel_atts ) {
 							$output .= '</p>';
 						}
 					}
-					if ($event_date_hide != 'yes') {
-						if (!empty($event_start_date)) {
-							if ($event_date > $event_start_date) {
-								if ($widget_date == 'yes') {
-									$output .= '<p class="vsel-meta-date vsel-hide">';
-								} else {
-									$output .= '<p class="vsel-meta-date">';
-								}
-								$output .= sprintf(esc_attr($vsel_atts['start_label']), date_i18n( get_option( 'date_format' ), esc_attr($event_start_date) ) ); 
-								$output .= '</p>';
+					if (!empty($event_start_date)) {
+						if ($event_date > $event_start_date) {
+							if ( ($event_date_hide == 'yes') && ($widget_date == 'yes') ) {
+								$output .= '<p class="vsel-meta-date vsel-page-hide vsel-widget-hide">';
+							} elseif ( ($event_date_hide != 'yes') && ($widget_date == 'yes') ) {
+								$output .= '<p class="vsel-meta-link vsel-widget-hide">';
+							} elseif ( ($event_date_hide == 'yes') && ($widget_date != 'yes') ) {
+								$output .= '<p class="vsel-meta-date vsel-page-hide">';
+							} else {
+								$output .= '<p class="vsel-meta-date">';
 							}
-						} 
-						if (!empty($event_start_date)) {
-							if ($event_date > $event_start_date) {
-								if ($widget_date == 'yes') {
-									$output .= '<p class="vsel-meta-date vsel-hide">';
-								} else {
-									$output .= '<p class="vsel-meta-date">';
-								}
-								$output .= sprintf(esc_attr($vsel_atts['end_label']), date_i18n( get_option( 'date_format' ), esc_attr($event_date) ) ); 
-								$output .= '</p>';
+							$output .= sprintf(esc_attr($vsel_atts['start_label']), date_i18n( get_option( 'date_format' ), esc_attr($event_start_date) ) ); 
+							$output .= '</p>';
+						}
+					} 
+					if (!empty($event_start_date)) {
+						if ($event_date > $event_start_date) {
+							if ( ($event_date_hide == 'yes') && ($widget_date == 'yes') ) {
+								$output .= '<p class="vsel-meta-date vsel-page-hide vsel-widget-hide">';
+							} elseif ( ($event_date_hide != 'yes') && ($widget_date == 'yes') ) {
+								$output .= '<p class="vsel-meta-link vsel-widget-hide">';
+							} elseif ( ($event_date_hide == 'yes') && ($widget_date != 'yes') ) {
+								$output .= '<p class="vsel-meta-date vsel-page-hide">';
+							} else {
+								$output .= '<p class="vsel-meta-date">';
 							}
-						} 
-						if (!empty($event_start_date)) {
-							if ($event_date == $event_start_date) {
-								if ($widget_date == 'yes') {
-									$output .= '<p class="vsel-meta-date vsel-hide">';
-								} else {
-									$output .= '<p class="vsel-meta-date">';
-								}
-								$output .= sprintf(esc_attr($vsel_atts['date_label']), date_i18n( get_option( 'date_format' ), esc_attr($event_date) ) ); 
-								$output .= '</p>';
-							}
-						} 
-						// support old plugin versions
-						if (empty($event_start_date)) {
-							if ($widget_date == 'yes') {
-								$output .= '<p class="vsel-meta-date vsel-hide">';
+							$output .= sprintf(esc_attr($vsel_atts['end_label']), date_i18n( get_option( 'date_format' ), esc_attr($event_date) ) ); 
+							$output .= '</p>';
+						}
+					} 
+					if (!empty($event_start_date)) {
+						if ($event_date == $event_start_date) {
+							if ( ($event_date_hide == 'yes') && ($widget_date == 'yes') ) {
+								$output .= '<p class="vsel-meta-date vsel-page-hide vsel-widget-hide">';
+							} elseif ( ($event_date_hide != 'yes') && ($widget_date == 'yes') ) {
+								$output .= '<p class="vsel-meta-link vsel-widget-hide">';
+							} elseif ( ($event_date_hide == 'yes') && ($widget_date != 'yes') ) {
+								$output .= '<p class="vsel-meta-date vsel-page-hide">';
 							} else {
 								$output .= '<p class="vsel-meta-date">';
 							}
@@ -152,9 +155,23 @@ function vsel_shortcode( $vsel_atts ) {
 							$output .= '</p>';
 						}
 					}
+					// support old plugin versions
+					if (empty($event_start_date)) {
+						if ( ($event_date_hide == 'yes') && ($widget_date == 'yes') ) {
+							$output .= '<p class="vsel-meta-date vsel-page-hide vsel-widget-hide">';
+						} elseif ( ($event_date_hide != 'yes') && ($widget_date == 'yes') ) {
+							$output .= '<p class="vsel-meta-link vsel-widget-hide">';
+						} elseif ( ($event_date_hide == 'yes') && ($widget_date != 'yes') ) {
+							$output .= '<p class="vsel-meta-date vsel-page-hide">';
+						} else {
+							$output .= '<p class="vsel-meta-date">';
+						}
+						$output .= sprintf(esc_attr($vsel_atts['date_label']), date_i18n( get_option( 'date_format' ), esc_attr($event_date) ) ); 
+						$output .= '</p>';
+					}
 					if (!empty($event_time)){
 						if ($widget_time == 'yes') {
-							$output .= '<p class="vsel-meta-time vsel-hide">';
+							$output .= '<p class="vsel-meta-time vsel-widget-hide">';
 						} else {
 							$output .= '<p class="vsel-meta-time">';
 						}
@@ -163,7 +180,7 @@ function vsel_shortcode( $vsel_atts ) {
 					}
 					if (!empty($event_location)){
 						if ($widget_location == 'yes') {
-							$output .= '<p class="vsel-meta-location vsel-hide">';
+							$output .= '<p class="vsel-meta-location vsel-widget-hide">';
 						} else {
 							$output .= '<p class="vsel-meta-location">';
 						}
@@ -171,8 +188,12 @@ function vsel_shortcode( $vsel_atts ) {
 						$output .= '</p>';
 					}
 					if (!empty($event_link)){
-						if ($widget_link == 'yes') {
-							$output .= '<p class="vsel-meta-link vsel-hide">';
+						if ( ($event_link_hide == 'yes') && ($widget_link == 'yes') ) {
+							$output .= '<p class="vsel-meta-link vsel-page-hide vsel-widget-hide">';
+						} elseif ( ($event_link_hide != 'yes') && ($widget_link == 'yes') ) {
+							$output .= '<p class="vsel-meta-link vsel-widget-hide">';
+						} elseif ( ($event_link_hide == 'yes') && ($widget_link != 'yes') ) {
+							$output .= '<p class="vsel-meta-link vsel-page-hide">';
 						} else {
 							$output .= '<p class="vsel-meta-link">';
 						}
@@ -184,13 +205,13 @@ function vsel_shortcode( $vsel_atts ) {
 				$output .= '<div class="vsel-image-info">';
 					if ( has_post_thumbnail() ) { 
 						if ($widget_image == 'yes') {
-							$output .= get_the_post_thumbnail( null, 'post-thumbnail', array('class' => 'vsel-image vsel-hide') ); 
+							$output .= get_the_post_thumbnail( null, 'post-thumbnail', array('class' => 'vsel-image vsel-widget-hide') ); 
 						} else {
 							$output .= get_the_post_thumbnail( null, 'post-thumbnail', array('class' => 'vsel-image') ); 
 						}
 					}
 					if ($widget_info == 'yes') {
-						$output .= '<div class="vsel-info vsel-hide">';
+						$output .= '<div class="vsel-info vsel-widget-hide">';
 					} else {
 						$output .= '<div class="vsel-info">';
 					}
@@ -208,7 +229,7 @@ function vsel_shortcode( $vsel_atts ) {
 			endwhile; 
 		
 			// pagination
-			$output .= '<div class="vsel-nav vsel-hide">';
+			$output .= '<div class="vsel-nav vsel-widget-hide">';
 			$output .= get_next_posts_link(  __( 'Next &raquo;', 'very-simple-event-list' ), $vsel_events->max_num_pages ); 
 			$output .= get_previous_posts_link( __( '&laquo; Previous', 'very-simple-event-list' ) ); 
 			$output .= '</div>';
