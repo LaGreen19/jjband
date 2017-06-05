@@ -93,8 +93,8 @@ function vsel_custom_postype() {
 		'show_in_nav_menus' => false,
 		'show_ui' => true,
 		'capability_type' => 'post',
-		'taxonomies' => array('event_cat'),
- 		'supports' => array('title', 'thumbnail', 'editor'),
+		'taxonomies' => array('event_cat', 'event_start_date'),
+ 		'supports' => array('title'),
 	);
 	register_post_type( 'event', $vsel_args);
 }
@@ -103,7 +103,7 @@ add_action( 'init', 'vsel_custom_postype' );
 
 // create event categories
 function vsel_taxonomy() {
-	register_taxonomy( 'event_cat', 'event', array( 'label' => __( 'Event Categories', 'very-simple-event-list' ), 'hierarchical' => true, ) );
+	register_taxonomy( 'event_cat', 'event_start_date', 'event', array( 'label' => __( 'Event Categories', 'very-simple-event-list' ), 'hierarchical' => true, ) );
 }
 add_action( 'init', 'vsel_taxonomy' );
 
@@ -115,7 +115,7 @@ function vsel_metabox() {
 		__( 'Event Meta', 'very-simple-event-list' ),
 		'vsel_metabox_callback',
 		'event',
-		'side',
+		'normal',
 		'default'
 	);
 }
@@ -126,9 +126,10 @@ function vsel_metabox_callback( $post ) {
 	// generate a nonce field
 	wp_nonce_field( 'vsel_meta_box', 'vsel_nonce' );
 
+
 	// get previously saved meta values (if any)
 	$event_start_date = get_post_meta( $post->ID, 'event-start-date', true );
-	$event_date = get_post_meta( $post->ID, 'event-date', true );
+  $event_permalink = get_field('event_start_date');
 	$event_time = get_post_meta( $post->ID, 'event-time', true );
 	$event_location = get_post_meta( $post->ID, 'event-location', true );
 	$event_link = get_post_meta( $post->ID, 'event-link', true );
@@ -139,7 +140,6 @@ function vsel_metabox_callback( $post ) {
 
 	// get date if saved else set it to current date
 	$event_start_date = !empty( $event_start_date ) ? $event_start_date : time();
-	$event_date = !empty( $event_date ) ? $event_date : time();
 
 	// set dateformat to match datepicker
 	$dateformat = get_option( 'date_format' );
@@ -153,8 +153,6 @@ function vsel_metabox_callback( $post ) {
 	?>
 	<p><label for="vsel-start-date"><?php _e( 'Start date', 'very-simple-event-list' ); ?></label>
 	<input class="widefat" id="vsel-start-date" type="text" name="vsel-start-date" required maxlength="10" placeholder="<?php _e( 'Use datepicker', 'very-simple-event-list' ); ?>" value="<?php echo date_i18n( $dateformat, esc_attr( $event_start_date ) ); ?>" /></p>
-	<p><label for="vsel-date"><?php _e( 'End date', 'very-simple-event-list' ); ?></label>
-	<input class="widefat" id="vsel-date" type="text" name="vsel-date" required maxlength="10" placeholder="<?php _e( 'Use datepicker', 'very-simple-event-list' ); ?>" value="<?php echo date_i18n( $dateformat, esc_attr( $event_date ) ); ?>" /></p>
 	<p><label for="vsel-time"><?php _e( 'Time', 'very-simple-event-list' ); ?></label>
 	<input class="widefat" id="vsel-time" type="text" name="vsel-time" maxlength="100" placeholder="<?php _e( 'Example: Friday/ 5-8pm', 'very-simple-event-list' ); ?>" value="<?php echo esc_attr( $event_time ); ?>" /></p>
 	<p><label for="vsel-location"><?php _e( 'Location', 'very-simple-event-list' ); ?></label>
@@ -192,9 +190,6 @@ function vsel_save_event_info( $post_id ) {
 	if ( isset( $_POST['vsel-start-date'] ) ) {
 		update_post_meta( $post_id, 'event-start-date', sanitize_text_field(strtotime( $_POST['vsel-start-date'] ) ) );
 	}
-	if ( isset( $_POST['vsel-date'] ) ) {
-		update_post_meta( $post_id, 'event-date', sanitize_text_field(strtotime( $_POST['vsel-date'] ) ) );
-	}
 	if ( isset( $_POST['vsel-time'] ) ) {
 		update_post_meta( $post_id, 'event-time', sanitize_text_field( $_POST['vsel-time'] ) );
 	}
@@ -226,7 +221,6 @@ add_action( 'save_post', 'vsel_save_event_info' );
 function vsel_custom_columns( $defaults ) {
 	unset( $defaults['date'] );
 	$defaults['event_start_date'] = __( 'Start date', 'very-simple-event-list' );
-	$defaults['event_date'] = __( 'End date', 'very-simple-event-list' );
 	$defaults['event_time'] = __( 'Time', 'very-simple-event-list' );
 	$defaults['event_location'] = __( 'Location', 'very-simple-event-list' );
 	return $defaults;
@@ -238,12 +232,6 @@ function vsel_custom_columns_content( $column_name, $post_id ) {
 		$start_date = get_post_meta( $post_id, 'event-start-date', true );
 		if(!empty( $start_date ) ) {
 			echo date_i18n( get_option( 'date_format' ), $start_date );
-		}
-	}
-	if ( 'event_date' == $column_name ) {
-		$date = get_post_meta( $post_id, 'event-date', true );
-		if(!empty( $date ) ) {
-			echo date_i18n( get_option( 'date_format' ), $date );
 		}
 	}
 	if ( 'event_time' == $column_name ) {
@@ -261,7 +249,6 @@ add_action( 'manage_event_posts_custom_column', 'vsel_custom_columns_content', 1
 // make event date column sortable
 function vsel_column_register_sortable( $columns ) {
 	$columns['event_start_date'] = 'event-start-date';
-	$columns['event_date'] = 'event-date';
 	return $columns;
 }
 add_filter( 'manage_edit-event_sortable_columns', 'vsel_column_register_sortable' );

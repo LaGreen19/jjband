@@ -40,4 +40,5 @@ function mytheme_et_project_posttype_args( $args ) {
 		'show_ui'             => false
 	));
 }
+
 ?>
