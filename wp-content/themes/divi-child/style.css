@@ -232,6 +232,10 @@ body.custom-background {
     background-position: center bottom!important;
 }
 
+#post-61 .et_pb_column {
+    width: 45% !important;
+}
+
 }
 
 /* Change header to float correctly wherever it is in the page */
@@ -295,7 +299,7 @@ h4.widgettitle{
 
 .et_right_sidebar #sidebar{
   height:100%!important;
-  padding:2% 0 0 0!important;
+  padding:2% 1% 0 0!important;
   margin:0;
   text-align:left;
 }
