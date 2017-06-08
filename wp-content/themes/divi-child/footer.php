@@ -49,7 +49,7 @@ if ( ! is_page_template( 'page-template-blank.php' ) ) : ?>
 
 	<?php wp_footer(); ?>
 	<div style="display:none">
-    <img id="myprefix-page-start-img" src="http://localhost:88/jjband/wp-content/uploads/2017/05/jjb_header.jpg"/>
+    <img id="myprefix-page-start-img" src="http://localhost:8888/jjband/wp-content/uploads/2017/05/jjb_header.jpg"/>
 </div>
 <script>jQuery("#myprefix-page-start-img").prependTo(jQuery("body"));</script>
 

@@ -47,7 +47,7 @@ h4 {
 }
 
 #main-header{
-  background:url(http://localhost:88/jjband/wp-content/uploads/2017/05/jjb_menu1.gif);
+  background:url(http://localhost:8888/jjband/wp-content/uploads/2017/05/jjb_menu1.gif);
   background-size:contain;
 }
 
@@ -234,6 +234,16 @@ body.custom-background {
 
 #post-61 .et_pb_column {
     width: 45% !important;
+}
+
+.photo-horizontal-column{
+  display:flex!important;
+  justify-content:space-around!important;
+
+}
+
+.centered-image-sidebar{
+  width:100%!important;
 }
 
 }
